@@ -1,9 +1,9 @@
 <template>
-  <div id="nav">
-    <router-link to="/login">登录</router-link> |
-    <router-link to="/main">首页</router-link>
+  <div class="app">
+    <router-view></router-view>
   </div>
-  <router-view />
 </template>
-
+<script lang="ts">
+export default {}
+</script>
 <style lang="less"></style>

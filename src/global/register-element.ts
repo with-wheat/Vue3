@@ -9,7 +9,10 @@ import {
   ElForm,
   ElFormItem,
   ElInput,
-  ElRadio
+  ElRadio,
+  ElIcon,
+  ElTabs,
+  ElTabPane
 } from 'element-plus'
 
 const components = [
@@ -19,7 +22,10 @@ const components = [
   ElForm,
   ElFormItem,
   ElInput,
-  ElRadio
+  ElRadio,
+  ElIcon,
+  ElTabs,
+  ElTabPane
 ]
 
 export default function (app: App): void {
