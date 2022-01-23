@@ -5,6 +5,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 export default defineComponent({
+  created() {
+    console.log(process.env.NODE_ENV)
+  },
   setup() {
     return {}
   }
