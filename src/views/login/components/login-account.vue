@@ -7,31 +7,34 @@
       class="demo-ruleForm"
       :size="formSize"
     >
-      <el-form-item label="账号" prop="userName">
-        <el-input v-model="loginForm.userName"></el-input>
+      <el-form-item label="账号" prop="name">
+        <el-input v-model="loginForm.name"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
-        <el-input v-model="loginForm.password"></el-input>
+        <el-input v-model="loginForm.password" type="password"></el-input>
       </el-form-item>
     </el-form>
   </div>
 </template>
 <script lang="ts" setup>
 import { reactive, ref, defineExpose } from 'vue'
+import { useStore } from 'vuex'
 import type { ElForm } from 'element-plus'
 import localCache from '@/utils/cache'
+// 获取store
+const store = useStore()
 
 const formSize = ref('large')
 // 表单
 const loginFormRef = ref<InstanceType<typeof ElForm>>()
 // 表单值
 const loginForm = reactive({
-  userName: '', // 用户名
-  password: '' // 密码
+  name: 'coderwhy', // 用户名
+  password: '123456' // 密码
 })
 // 验证规则
 const rules = reactive({
-  userName: [
+  name: [
     {
       required: true,
       message: '请输入用户名',
@@ -56,13 +59,14 @@ const loginSubmit = (isKeepPassword: boolean) => {
     if (temp) {
       if (isKeepPassword) {
         // 本地缓存
-        localCache.setCache('name', loginForm.userName)
+        localCache.setCache('name', loginForm.name)
         localCache.setCache('password', loginForm.password)
       } else {
         localCache.deleteCache('name')
         localCache.deleteCache('password')
       }
       // 发送登录请求
+      store.dispatch('login/accountLoginAction', { ...loginForm })
     }
   })
 }

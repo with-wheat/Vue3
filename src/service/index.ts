@@ -4,14 +4,14 @@ import { BASE_URL, TIME_OUT } from './request/config'
 
 import LocalCache from '@/utils/cache'
 
-const hyRequest = new HYRequest({
+const Request = new HYRequest({
   baseURL: BASE_URL,
   timeout: TIME_OUT,
   interceptors: {
     requestInterceptor: (config: any) => {
       // 携带token的拦截
       try {
-        const token = LocalCache.getCache('token')
+        const token = LocalCache.getCache('TOKEN_KEY')
         if (token) {
           config.headers.Authorization = `Bearer ${token}`
         }
@@ -32,4 +32,4 @@ const hyRequest = new HYRequest({
   }
 })
 
-export default hyRequest
+export default Request

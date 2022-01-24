@@ -4,19 +4,15 @@ import router from './router'
 import store from './store'
 import 'normalize.css'
 import './assets/css/index.less'
+
+import { setUpStore } from '@/store'
+setUpStore()
 // 引入引入element-plus
 import { globalRegister } from './global'
 globalRegister(createApp(App))
 
-// icon
+// 引入element-plus-icon
 import { Avatar, Cellphone } from '@element-plus/icons-vue'
-
-// import hyRequest from './service'
-// interface DataType {
-//   data: any
-//   returnCode: string
-//   success: boolean
-// }
 
 // hyRequest.request<DataType>({
 //   url: '/home/multidata',
@@ -35,16 +31,6 @@ import { Avatar, Cellphone } from '@element-plus/icons-vue'
 //     }
 //   }
 // })
-
-// hyRequest
-//   .get<DataType>({
-//     url: '/home/multidata',
-//     showLoading: true
-//   })
-//   .then((res) => {
-//     console.log(res)
-//   })
-
 createApp(App)
   .component('Cellphone', Cellphone)
   .component('avatar', Avatar)
