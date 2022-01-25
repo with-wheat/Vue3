@@ -13,7 +13,16 @@ import { globalRegister } from './global'
 globalRegister(createApp(App))
 
 // 引入element-plus-icon
-import { Avatar, Cellphone } from '@element-plus/icons-vue'
+import {
+  Avatar,
+  Cellphone,
+  Fold,
+  Expand,
+  Menu,
+  ArrowDown,
+  Shop,
+  CircleCloseFilled
+} from '@element-plus/icons-vue'
 
 // hyRequest.request<DataType>({
 //   url: '/home/multidata',
@@ -35,6 +44,12 @@ import { Avatar, Cellphone } from '@element-plus/icons-vue'
 createApp(App)
   .component('Cellphone', Cellphone)
   .component('avatar', Avatar)
+  .component('Fold', Fold)
+  .component('Expand', Expand)
+  .component('Menu', Menu)
+  .component('arrow-down', ArrowDown)
+  .component('shop', Shop)
+  .component('circle-close-filled', CircleCloseFilled)
   .use(store)
   .use(router)
   .mount('#app')

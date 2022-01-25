@@ -1,27 +1,37 @@
 <template>
   <el-container class="main-content">
     <el-aside :width="isCollapse ? '60px' : '210px'">
-      <nav-menu />
+      <nav-menu :isCollapse="isCollapse" />
     </el-aside>
     <el-container class="page">
-      <el-header class="page-header"> 头部 </el-header>
+      <el-header class="page-header">
+        <nav-header @foldChange="foldChange" />
+      </el-header>
       <el-main class="page-content">
-        <div class="page-info">内容</div>
+        <div class="page-info">
+          <router-view></router-view>
+        </div>
       </el-main>
     </el-container>
   </el-container>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import NavMenu from '@/components/nav-menu'
+import NavHeader from '@/components/nav-header/nav-header.vue'
 export default defineComponent({
-  components: { NavMenu },
+  components: { NavMenu, NavHeader },
   setup() {
     const requests = () => {
       console.log(Request)
     }
-    return { requests }
+    const isCollapse = ref(false)
+    // 监听头部收缩点击事件
+    const foldChange = (flag) => {
+      isCollapse.value = flag
+    }
+    return { requests, isCollapse, foldChange }
   }
 })
 </script>
@@ -35,10 +45,10 @@ export default defineComponent({
 .page-content {
   height: calc(100% - 48px);
 
-  // .page-info {
-  //   background-color: #fff;
-  //   border-radius: 5px;
-  // }
+  .page-info {
+    background-color: #fff;
+    border-radius: 5px;
+  }
 }
 
 .el-header,
@@ -63,7 +73,6 @@ export default defineComponent({
   transition: width 0.3s linear;
   scrollbar-width: none; /* firefox */
   -ms-overflow-style: none; /* IE 10+ */
-
   &::-webkit-scrollbar {
     display: none;
   }

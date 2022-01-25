@@ -15,6 +15,7 @@ import { IRootState } from '../types'
 import LocalCache from '@/utils/cache'
 import router from '@/router'
 import { IAccount } from '@/service/login/types'
+import { mapMenusToRoutes } from '@/utils/map-menus'
 const loginModule: Module<ILoginState, IRootState> = {
   namespaced: true,
   state() {
@@ -41,6 +42,11 @@ const loginModule: Module<ILoginState, IRootState> = {
     userMenusInfo(state, list: any) {
       state.userMenus = list
       LocalCache.setCache('UserMenu', list)
+      // 加载路由
+      const route = mapMenusToRoutes(list)
+      route.forEach((res) => {
+        router.addRoute('main', res)
+      })
     }
   },
   actions: {
@@ -54,7 +60,7 @@ const loginModule: Module<ILoginState, IRootState> = {
       // 查询用户信息
       const userInfo = await requestUserInfo(id)
       // 保存用户信息
-      commit('changeUserInfo', userInfo)
+      commit('changeUserInfo', userInfo.data)
       // 获取菜单
       const userRoles = await requestUserMenu(userInfo.data.role.id)
       const userMenu = userRoles.data

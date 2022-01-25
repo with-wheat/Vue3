@@ -2,12 +2,12 @@
   <div class="nav-menu">
     <div class="logo">
       <img class="img" src="~@/assets/img/logo.svg" alt="logo" />
-      <span class="title"> VUE3+TS </span>
+      <span class="title" v-if="!props.isCollapse"> VUE3+TS </span>
     </div>
     <el-menu
-      :default-active="2"
+      :default-active="active"
       class="el-menu-vertical"
-      :collapse="collapse"
+      :collapse="props.isCollapse"
       background-color="#0c2135"
       text-color="#b7bdc3"
       active-text-color="#0a60bd"
@@ -18,7 +18,7 @@
           <!-- 二级菜单的可以展开的标题 -->
           <el-sub-menu :index="item.id + ''">
             <template #title>
-              <i v-if="item.icon" :class="item.icon"></i>
+              <el-icon v-if="item.icon"><Menu /></el-icon>
               <span>{{ item.name }}</span>
             </template>
             <!-- 遍历里面的item -->
@@ -36,7 +36,7 @@
         <!-- 一级菜单 -->
         <template v-else-if="item.type === 2">
           <el-menu-item :index="item.id + ''">
-            <i v-if="item.icon" :class="item.icon"></i>
+            <el-icon v-if="item.icon"><Menu /></el-icon>
             <span>{{ item.name }}</span>
           </el-menu-item>
         </template>
@@ -45,21 +45,24 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { computed, defineProps, ref } from 'vue'
 import { userStore } from '@/store'
 import router from '@/router'
-// 是否折叠
-const collapse = ref(false)
-
+// props
+const props = defineProps({
+  isCollapse: Boolean
+})
 // 获取store的菜单
 const store = userStore()
 const useMenu = computed(() => store.state.login.userMenus)
 
+// 默认激活的index
+const active = ref('2')
 // 路由点击事件
-const menuClick = (data) => {
+const menuClick = (data: any) => {
   const { url } = data
   // 跳转到对应的路由
-  router.push(url)
+  router.push(url ?? '/not-found')
 }
 </script>
 
