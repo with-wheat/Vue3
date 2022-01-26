@@ -1,11 +1,12 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 
 import LocalCache from '@/utils/cache'
-
+// 获取第一次加载的url
+import { firstMenu } from '@/utils/map-menus'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/login'
+    redirect: '/main'
   },
   {
     path: '/login',
@@ -29,16 +30,17 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to) => {
   if (to.path !== '/login') {
     // 获取登录的token
     const token = LocalCache.getCache('TOKEN_KEY')
     if (!token) {
-      router.push('/login')
-    } else {
-      next()
+      return '/login'
     }
-  } else next()
+  }
+  if (to.path === '/main') {
+    return firstMenu.url
+  }
 })
 
 export default router

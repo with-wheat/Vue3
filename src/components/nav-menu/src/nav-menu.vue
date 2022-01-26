@@ -45,9 +45,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import { computed, defineProps, ref } from 'vue'
+import { computed, defineProps, ref, onMounted } from 'vue'
 import { userStore } from '@/store'
-import router from '@/router'
+import { useRoute, useRouter } from 'vue-router'
+import { pathToMenu } from '@/utils/map-menus'
 // props
 const props = defineProps({
   isCollapse: Boolean
@@ -55,9 +56,21 @@ const props = defineProps({
 // 获取store的菜单
 const store = userStore()
 const useMenu = computed(() => store.state.login.userMenus)
-
 // 默认激活的index
-const active = ref('2')
+onMounted(() => {
+  // console.log(firstMenu)
+})
+// 路由
+// 获取路由
+const router = useRouter()
+// 获取路由对象
+const route = useRoute()
+
+// 获取当前路径
+const currentPath = route.path
+// 查找当前路由对象
+const currenRoute = pathToMenu(useMenu.value, currentPath)
+let active = ref(currenRoute.id + '')
 // 路由点击事件
 const menuClick = (data: any) => {
   const { url } = data
@@ -118,6 +131,7 @@ const menuClick = (data: any) => {
       background-color: #0a60bd !important;
     }
   }
+
   .el-menu-vertical:not(.el-menu--collapse) {
     width: 100%;
     height: calc(100% - 48px);

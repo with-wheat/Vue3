@@ -6,7 +6,7 @@ import 'normalize.css'
 import './assets/css/index.less'
 
 import { setUpStore } from '@/store'
-// 登录信息持久化
+// 登录信息持久化 必须放在注册路由之前
 setUpStore()
 // 引入引入element-plus
 import { globalRegister } from './global'

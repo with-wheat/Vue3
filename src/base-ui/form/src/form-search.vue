@@ -1,5 +1,6 @@
 <template>
   <div class="SearchForm">
+    <!-- 搜索组件 -->
     <el-form
       ref="SearchForm"
       :model="ruleForm"
