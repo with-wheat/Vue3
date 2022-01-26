@@ -1,6 +1,9 @@
 <template>
   <div class="SearchForm">
     <!-- 搜索组件 -->
+    <header>
+      <slot name="header"></slot>
+    </header>
     <el-form
       ref="SearchFormRef"
       :model="ruleForm"
@@ -53,6 +56,9 @@
         </el-col>
       </el-row>
     </el-form>
+    <footer>
+      <slot name="footer"></slot>
+    </footer>
   </div>
 </template>
 <script lang="ts" setup>
@@ -101,7 +107,7 @@ const props = defineProps({
   // 表单值绑定
   modelValue: {
     type: Object,
-    default: () => ({})
+    required: true
   }
 })
 const emit = defineEmits(['update:modelValue'])

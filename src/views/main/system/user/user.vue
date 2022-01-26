@@ -1,31 +1,16 @@
 <template>
   <div class="user">
-    <div class="search">
-      <search v-bind="fromConfig" v-model="searchForm" />
-    </div>
+    <!-- 检索 -->
+    <page-search :fromConfig="fromConfig" />
     <div class="content"></div>
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { defineComponent, ref } from 'vue'
-import search from '@/base-ui/form/index'
 import { fromConfig } from './config/search.config'
-export default defineComponent({
-  name: 'user',
-  components: { search },
-  setup() {
-    const searchForm = ref({
-      id: '',
-      name: '',
-      password: '',
-      movement: '',
-      createTime: ''
-    })
-
-    return { fromConfig, searchForm }
-  }
-})
+// 获取搜索组件
+import PageSearch from '@/components/page-search/index'
 </script>
 
-<style scoped></style>
+<style scoped lang="less"></style>
