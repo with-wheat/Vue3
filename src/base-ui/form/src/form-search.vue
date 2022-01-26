@@ -2,7 +2,7 @@
   <div class="SearchForm">
     <!-- 搜索组件 -->
     <el-form
-      ref="SearchForm"
+      ref="SearchFormRef"
       :model="ruleForm"
       :rules="rules"
       :label-width="props.labelWidth"
@@ -19,11 +19,15 @@
             <template v-if="item.type === 'input' || item.type === 'password'">
               <el-input
                 :placeholder="item.placeholder"
+                v-model="SearchForm[`${item.field}`]"
                 :show-password="item.type === 'password'"
               ></el-input>
             </template>
             <template v-else-if="item.type === 'select'">
-              <el-select :placeholder="item.placeholder">
+              <el-select
+                v-model="SearchForm[`${item.field}`]"
+                :placeholder="item.placeholder"
+              >
                 <el-option
                   v-for="item in item.options"
                   :key="item.value"
@@ -35,6 +39,7 @@
             </template>
             <template v-else-if="item.type === 'datepicker'">
               <el-date-picker
+                v-model="SearchForm[`${item.field}`]"
                 :type="item.otherOptions.type"
                 unlink-panels
                 range-separator="To"
@@ -51,7 +56,15 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, reactive, defineProps, PropType, onMounted } from 'vue'
+import {
+  ref,
+  reactive,
+  defineProps,
+  defineEmits,
+  PropType,
+  onMounted,
+  watch
+} from 'vue'
 import { IFromItem } from '../types'
 
 onMounted(() => {
@@ -84,8 +97,14 @@ const props = defineProps({
       sm: 24,
       xs: 24
     })
+  },
+  // 表单值绑定
+  modelValue: {
+    type: Object,
+    default: () => ({})
   }
 })
+const emit = defineEmits(['update:modelValue'])
 
 const formSize = ref('')
 const ruleForm = reactive({
@@ -117,6 +136,18 @@ const shortcuts = [
     }
   }
 ]
+
+// 获取双向绑定的数据
+const SearchForm = ref({ ...props.modelValue })
+// 监听数据的改变
+watch(
+  SearchForm,
+  (newValue) => {
+    // 跟新父组件实现双向绑定，父组件不需要调用此函数
+    emit('update:modelValue', newValue)
+  },
+  { deep: true }
+)
 </script>
 <style lang="less" scoped>
 .SearchForm {

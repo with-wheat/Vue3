@@ -7,6 +7,7 @@ export interface selectOptionsType {
 }
 
 export interface IFromItem {
+  field: string
   type: IFromType
   label: string
   rules?: any[]

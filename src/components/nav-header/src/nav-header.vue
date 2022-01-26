@@ -33,11 +33,10 @@ export default defineComponent({
       emit('foldChange', foldValue.value)
     }
     // 获取面包屑数据
-    // 获取userMenu数据
     const store = userStore()
-    const userMenus = store.state.login.userMenus
-    // 计算属性监听当前路由变化
+    // 计算属性监听当前路由变化然后调用对应的方法获取面包屑
     const breadCrumbsDataInfo = computed(() => {
+      const userMenus = store.state.login.userMenus
       // 获取当前路径
       const route = useRoute()
       const currentPath = route.path
