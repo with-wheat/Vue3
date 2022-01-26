@@ -1,7 +1,7 @@
 <template>
   <div class="user">
     <div class="search">
-      <search />
+      <search v-bind="fromConfig" />
     </div>
     <div class="content"></div>
   </div>
@@ -10,11 +10,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import search from '@/base-ui/form/index'
+import { fromConfig } from './config/search.config'
 export default defineComponent({
   name: 'user',
   components: { search },
   setup() {
-    return {}
+    return { fromConfig }
   }
 })
 </script>

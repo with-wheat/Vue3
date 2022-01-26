@@ -31,6 +31,7 @@ declare module 'vue' {
     ElTabs: typeof import('element-plus/es')['ElTabs']
     NavHeader: typeof import('./src/components/nav-header/nav-header.vue')['default']
     NavMenu: typeof import('./src/components/nav-menu/src/nav-menu.vue')['default']
+    UserInfo: typeof import('./src/components/nav-header/components/user-info.vue')['default']
   }
 }
 
