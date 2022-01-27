@@ -4,14 +4,11 @@ import router from './router'
 import store from './store'
 import 'normalize.css'
 import './assets/css/index.less'
-
 import { setUpStore } from '@/store'
-// 登录信息持久化 必须放在注册路由之前
-setUpStore()
+const app = createApp(App)
 // 引入引入element-plus
 import { globalRegister } from './global'
-globalRegister(createApp(App))
-
+globalRegister(app)
 // 引入element-plus-icon
 import {
   Avatar,
@@ -21,9 +18,7 @@ import {
   Menu,
   ArrowDown,
   Shop,
-  CircleCloseFilled,
-  Message,
-  Search
+  CircleCloseFilled
 } from '@element-plus/icons-vue'
 
 // hyRequest.request<DataType>({
@@ -43,7 +38,9 @@ import {
 //     }
 //   }
 // })
-createApp(App)
+// 登录信息持久化 必须放在注册路由之前
+setUpStore()
+app
   .component('Cellphone', Cellphone)
   .component('avatar', Avatar)
   .component('Fold', Fold)
