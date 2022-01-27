@@ -7,7 +7,6 @@
     <el-form
       ref="SearchFormRef"
       :model="ruleForm"
-      :rules="rules"
       :label-width="props.labelWidth"
       class="demo-ruleForm"
       :size="formSize"
@@ -16,7 +15,7 @@
         <el-col
           v-for="(item, index) in props.formItem"
           :key="index"
-          :span="props.spanLayout"
+          v-bind="props.spanLayout"
         >
           <el-form-item :style="props.itemStyle" :label="item.label">
             <template v-if="item.type === 'input' || item.type === 'password'">
@@ -159,5 +158,8 @@ watch(
 .SearchForm {
   padding: 10px;
   box-sizing: border-box;
+  .el-select {
+    width: 100%;
+  }
 }
 </style>

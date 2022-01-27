@@ -6,6 +6,7 @@ import {
   requestUserInfo,
   requestUserMenu
 } from '@/service/login'
+
 // 当前store的类型
 import { ILoginState } from './types'
 // 根目录的类型
