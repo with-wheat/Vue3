@@ -1,7 +1,7 @@
 <template>
   <div class="page-search">
     <div class="search">
-      <search v-bind="props.fromConfig" v-model="searchForm">
+      <search v-bind="props.fromConfig" v-model="searchFormData">
         <template #header>
           <div class="searchHeader">
             <h4>检索数据</h4>
@@ -9,7 +9,9 @@
         </template>
         <template #footer>
           <div class="searchFooter">
-            <el-button type="primary" :icon="Edit">重置</el-button>
+            <el-button type="primary" @click="handelResetClick" :icon="Edit"
+              >重置</el-button
+            >
             <el-button type="primary" :icon="Search">搜索</el-button>
           </div>
         </template>
@@ -28,14 +30,20 @@ const props = defineProps({
     required: true
   }
 })
-// 双向绑定的值
-const searchForm = ref({
-  id: '',
-  name: '',
-  password: '',
-  movement: '',
-  createTime: ''
-})
+// 双向绑定的值为配置文件的field
+const fromItems = props.fromConfig?.formItem ?? []
+// 定义初始值
+const formOriginData: any = {}
+for (const item of fromItems) {
+  formOriginData[item.field] = ''
+}
+// 将初始值赋值给双向绑定的值
+const searchFormData = ref(formOriginData)
+
+// 重置
+const handelResetClick = () => {
+  searchFormData.value = formOriginData
+}
 </script>
 <style lang="less" scoped>
 .searchHeader {

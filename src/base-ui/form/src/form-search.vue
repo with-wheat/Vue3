@@ -67,14 +67,10 @@ import {
   defineProps,
   defineEmits,
   PropType,
-  onMounted,
-  watch
+  watch,
+  computed
 } from 'vue'
 import { IFromItem } from '../types'
-
-onMounted(() => {
-  console.log('')
-})
 const props = defineProps({
   formItem: {
     type: Array as PropType<IFromItem[]>,
@@ -144,6 +140,13 @@ const shortcuts = [
 
 // 获取双向绑定的数据
 const SearchForm = ref({ ...props.modelValue })
+watch(
+  () => props.modelValue,
+  (newValue) => {
+    SearchForm.value = { ...newValue }
+  },
+  { deep: true }
+)
 // 监听数据的改变
 watch(
   SearchForm,
