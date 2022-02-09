@@ -41,9 +41,9 @@ const systemModule: Module<systemType, IRootState> = {
   actions: {
     // 发送网络请求获取用户列表
     async getSystemList({ commit }, payload: any) {
-      const { info, pageName } = payload
+      const { queryInfo, pageName } = payload
       const pageUrl = `/${pageName}/list`
-      const userInfo = await getUserList(pageUrl, info)
+      const userInfo = await getUserList(pageUrl, queryInfo)
       const { list, totalCount } = userInfo.data
 
       const changePageName =

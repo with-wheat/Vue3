@@ -12,7 +12,9 @@
             <el-button type="primary" @click="handelResetClick" :icon="Edit"
               >重置</el-button
             >
-            <el-button type="primary" :icon="Search">搜索</el-button>
+            <el-button type="primary" @click="handelSearch" :icon="Search"
+              >搜索</el-button
+            >
           </div>
         </template>
       </search>
@@ -20,7 +22,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, defineProps } from 'vue'
+import { ref, defineProps, defineEmits } from 'vue'
 import { Edit, Search } from '@element-plus/icons-vue'
 import search from '@/base-ui/form/index'
 const props = defineProps({
@@ -30,6 +32,7 @@ const props = defineProps({
     required: true
   }
 })
+const emit = defineEmits(['resetBtnClick', 'queryBtnClick'])
 // 双向绑定的值为配置文件的field
 const fromItems = props.fromConfig?.formItem ?? []
 // 定义初始值
@@ -43,6 +46,11 @@ const searchFormData = ref(formOriginData)
 // 重置
 const handelResetClick = () => {
   searchFormData.value = formOriginData
+  emit('resetBtnClick')
+}
+// 搜索
+const handelSearch = () => {
+  emit('queryBtnClick', searchFormData.value)
 }
 </script>
 <style lang="less" scoped>

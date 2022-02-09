@@ -6,7 +6,6 @@
     </header>
     <el-form
       ref="SearchFormRef"
-      :model="ruleForm"
       :label-width="props.labelWidth"
       class="demo-ruleForm"
       :size="formSize"
@@ -21,13 +20,15 @@
             <template v-if="item.type === 'input' || item.type === 'password'">
               <el-input
                 :placeholder="item.placeholder"
-                v-model="SearchForm[`${item.field}`]"
+                :model-value="SearchForm[`${item.field}`]"
+                @update:modelValue="handelValueChange($event, item.field)"
                 :show-password="item.type === 'password'"
               ></el-input>
             </template>
             <template v-else-if="item.type === 'select'">
               <el-select
-                v-model="SearchForm[`${item.field}`]"
+                :model-value="SearchForm[`${item.field}`]"
+                @update:modelValue="handelValueChange($event, item.field)"
                 :placeholder="item.placeholder"
               >
                 <el-option
@@ -41,7 +42,8 @@
             </template>
             <template v-else-if="item.type === 'datepicker'">
               <el-date-picker
-                v-model="SearchForm[`${item.field}`]"
+                :model-value="SearchForm[`${item.field}`]"
+                @update:modelValue="handelValueChange($event, item.field)"
                 :type="item.otherOptions.type"
                 unlink-panels
                 range-separator="To"
@@ -108,12 +110,6 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue'])
 
 const formSize = ref('')
-const ruleForm = reactive({
-  name: '',
-  pwd: '',
-  region: '',
-  time: ''
-})
 // 快捷选择方式
 const shortcuts = [
   {
@@ -140,6 +136,7 @@ const shortcuts = [
 
 // 获取双向绑定的数据
 const SearchForm = ref({ ...props.modelValue })
+// 侦听到数据改变则赋值
 watch(
   () => props.modelValue,
   (newValue) => {
@@ -147,15 +144,9 @@ watch(
   },
   { deep: true }
 )
-// 监听数据的改变
-watch(
-  SearchForm,
-  (newValue) => {
-    // 跟新父组件实现双向绑定，父组件不需要调用此函数
-    emit('update:modelValue', newValue)
-  },
-  { deep: true }
-)
+const handelValueChange = (value: any, field: string) => {
+  emit('update:modelValue', { ...props.modelValue, [field]: value })
+}
 </script>
 <style lang="less" scoped>
 .SearchForm {

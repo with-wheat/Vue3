@@ -31,7 +31,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { defineProps, computed } from 'vue'
+import { defineProps, computed, defineExpose } from 'vue'
 import { useStore } from 'vuex'
 // 列表组件
 import PageTable from '@/base-ui/table/index'
@@ -47,18 +47,32 @@ const props = defineProps({
 })
 // 获取用户数据
 const store = useStore()
-// 搜索参数
-store.dispatch('system/getSystemList', {
-  info: {
-    offset: 0,
-    size: 10
-  },
-  pageName: props.pageName
-})
+// 发送网络请求
+const getPageData = (queryInfo: any = {}) => {
+  // 去掉空键值对
+  for (const key in queryInfo) {
+    if (queryInfo[key] === '') {
+      delete queryInfo[key]
+    }
+  }
+  store.dispatch('system/getSystemList', {
+    queryInfo: {
+      offset: 0,
+      size: 10,
+      ...queryInfo
+    },
+    pageName: props.pageName
+  })
+}
+getPageData()
 // 获取用户信息
 const userInfo = computed(() =>
   store.getters['system/pageListData'](props.pageName)
 )
 // const userCount = computed(() => store.state.system.userCount)
+// 暴露出请求方法
+defineExpose({
+  getPageData
+})
 </script>
 <style lang="less" scoped></style>

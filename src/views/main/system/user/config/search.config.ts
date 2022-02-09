@@ -19,37 +19,44 @@ export const fromConfig: IForm = {
     {
       field: 'id',
       type: 'input',
-      label: 'id',
-      placeholder: '请输入用户id'
+      label: '用户id',
+      placeholder: '请输入用户ID'
     },
     {
       field: 'name',
       type: 'input',
       label: '用户名',
-      rules: [],
       placeholder: '请输入用户名'
     },
     {
-      field: 'password',
+      field: 'realname',
       type: 'input',
-      label: '密码',
-      placeholder: '请输入密码'
+      label: '真实姓名',
+      rules: [],
+      placeholder: '请输入真实姓名'
     },
     {
-      field: 'movement',
+      field: 'callphone',
+      type: 'input',
+      label: '电话号码',
+      rules: [],
+      placeholder: '请输入电话号码'
+    },
+    {
+      field: 'enable',
       type: 'select',
-      label: '喜欢的运动',
+      label: '状态',
       options: [
         {
-          label: '篮球',
-          value: 'basketball'
+          label: '启用',
+          value: '1'
         },
         {
-          label: '足球',
-          value: 'football'
+          label: '禁用',
+          value: '0'
         }
       ],
-      placeholder: '请输入喜欢的运动'
+      placeholder: '请选择状态'
     },
     {
       field: 'createTime',
