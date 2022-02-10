@@ -16,14 +16,16 @@ import { IRootState } from '../types'
 import LocalCache from '@/utils/cache'
 import router from '@/router'
 import { IAccount } from '@/service/login/types'
-import { mapMenusToRoutes } from '@/utils/map-menus'
+import { mapMenusToRoutes, mapMenusToPermissions } from '@/utils/map-menus'
 const loginModule: Module<ILoginState, IRootState> = {
   namespaced: true,
   state() {
     return {
       token: '',
       userInfo: null,
-      userMenus: null
+      userMenus: null,
+      // 用户操作权限
+      permission: []
     }
   },
   getters: {},
@@ -40,14 +42,18 @@ const loginModule: Module<ILoginState, IRootState> = {
       LocalCache.setCache('UserInfo', userInfo)
     },
     // 角色的菜单
-    userMenusInfo(state, list: any) {
-      state.userMenus = list
-      LocalCache.setCache('UserMenu', list)
+    userMenusInfo(state, userMenu: any) {
+      state.userMenus = userMenu
+      LocalCache.setCache('UserMenu', userMenu)
       // 加载路由
-      const route = mapMenusToRoutes(list)
+      const route = mapMenusToRoutes(userMenu)
+      // 注册动态路由
       route.forEach((res) => {
         router.addRoute('main', res)
       })
+      // 获取用户的按钮权限
+      const permission = mapMenusToPermissions(userMenu)
+      state.permission = permission
     }
   },
   actions: {

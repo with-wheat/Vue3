@@ -25,19 +25,19 @@ export const contentTableList = {
     {
       prop: 'createAt',
       label: '创建时间',
-      minWidth: '150',
+      minWidth: '120',
       slotName: 'createAt'
     },
     {
       prop: 'updateAt',
       label: '更新时间',
-      minWidth: '150',
+      minWidth: '120',
       slotName: 'updateAt'
     },
     // 操作
     {
       label: '操作',
-      minWidth: '150',
+      minWidth: '160',
       slotName: 'handler',
       fixed: 'right'
     }

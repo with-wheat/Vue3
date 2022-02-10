@@ -26,7 +26,7 @@ export const contentTableList = {
     // 操作
     {
       label: '操作',
-      minWidth: '150',
+      minWidth: '160',
       slotName: 'handler',
       fixed: 'right'
     }

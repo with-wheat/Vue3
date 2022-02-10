@@ -15,8 +15,25 @@
       </template>
       <template #handler>
         <div class="handel-btn">
-          <el-button type="danger" size="small" :icon="Delete">删除</el-button>
-          <el-button type="primary" size="small" :icon="Edit">编辑</el-button>
+          <el-button type="primary" size="small" plain :icon="Check"
+            >详情</el-button
+          >
+          <el-button
+            type="danger"
+            size="small"
+            plain
+            :icon="Edit"
+            v-if="isDelete"
+            >删除</el-button
+          >
+          <el-button
+            type="primary"
+            size="small"
+            plain
+            :icon="Edit"
+            v-if="isUpdate"
+            >编辑</el-button
+          >
         </div>
       </template>
       <!-- 自定义表头 -->
@@ -37,8 +54,16 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { defineProps, computed, defineExpose, ref, watch, onMounted } from 'vue'
+import { defineProps, computed, defineExpose, ref, watch } from 'vue'
 import { useStore } from 'vuex'
+import { Edit, Check, Delete } from '@element-plus/icons-vue'
+// 获取用户权限
+import { usePermission } from '@/hooks/use-permission'
+const isDelete = usePermission(props.pageName, 'delete')
+const isUpdate = usePermission(props.pageName, 'update')
+const isCreate = usePermission(props.pageName, 'create')
+const isQuery = usePermission(props.pageName, 'query')
+
 // 列表组件
 import PageTable from '@/base-ui/table/index'
 const props = defineProps({
@@ -100,10 +125,6 @@ props.contentTableList.listData.forEach((res) => {
   ) {
     return contentTable.push(res)
   }
-})
-
-onMounted(() => {
-  console.log(contentTable, 'contentTable')
 })
 
 // 暴露出请求方法

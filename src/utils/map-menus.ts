@@ -2,7 +2,11 @@ import { RouteRecordRaw } from 'vue-router'
 import { IBreadcrumb } from '@/base-ui/breadcrumb/types'
 // 保存第一个菜单
 let firstMenu: any = null
-// 获取角色路由
+/**
+ * 获取角色路由
+ * @param userMenus 角色菜单列表
+ * @returns
+ */
 export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
   const routes: RouteRecordRaw[] = []
   // 先加载默认所有的routes
@@ -33,14 +37,25 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
   return routes
 }
 
-// 获取面包屑
+/**
+ * 获取面包屑
+ * @param userMenus 用户菜单列表
+ * @param currentPath 当前所在的路由地址
+ * @returns
+ */
 export function breadCrumbsData(userMenus: any, currentPath: any) {
   const Breadcrumbs: IBreadcrumb[] = []
   pathToMenu(userMenus, currentPath, Breadcrumbs)
   return Breadcrumbs
 }
 
-// 查找当前匹配的路由
+/**
+ * 查找当前匹配的路由
+ * @param userMenus 用户菜单列表
+ * @param currentPath 当前所在的路由地址
+ * @param breadcrumbArr 定义保存面包屑数据的数组
+ * @returns
+ */
 export function pathToMenu(
   userMenus: any[],
   currentPath: string,
@@ -59,6 +74,28 @@ export function pathToMenu(
       return menu
     }
   }
+}
+
+/**
+ * 获取按钮权限
+ * @param userMenus 用户菜单列表
+ * @returns
+ */
+export function mapMenusToPermissions(userMenus: any[]) {
+  // 储存权限的数据
+  const permissions: string[] = []
+  // 定义递归找出所有的按钮权限
+  const _recurseGetPermissions = (menus: any[]) => {
+    for (const item of menus) {
+      if (item.type === 1 || item.type === 2) {
+        _recurseGetPermissions(item.children ?? [])
+      } else if (item.type === 3) {
+        permissions.push(item.permission)
+      }
+    }
+  }
+  _recurseGetPermissions(userMenus)
+  return permissions
 }
 
 export { firstMenu }

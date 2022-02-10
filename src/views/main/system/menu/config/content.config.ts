@@ -1,5 +1,3 @@
-import { Failed } from '@element-plus/icons-vue/dist/types'
-
 export const contentTableList = {
   // 标题
   title: '菜单列表',
@@ -45,7 +43,7 @@ export const contentTableList = {
     // 操作
     {
       label: '操作',
-      minWidth: '150',
+      minWidth: '160',
       slotName: 'handler',
       fixed: 'right'
     }

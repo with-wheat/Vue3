@@ -16,6 +16,7 @@ import { defineComponent } from 'vue'
 import PageContent from '@/components/page-content/index'
 // 引入配置文件
 import { contentTableList } from './config/content.config'
+
 export default defineComponent({
   name: 'menu',
   components: { PageContent },
