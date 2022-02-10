@@ -11,7 +11,14 @@
       ref="pageContentRef"
       :pageName="pageName"
       :contentTableList="contentTableList"
-    ></page-content>
+    >
+      <!-- 自定义表头 -->
+      <template #headerHandle>
+        <div>
+          <el-button type="success">新增角色</el-button>
+        </div>
+      </template>
+    </page-content>
   </div>
 </template>
 

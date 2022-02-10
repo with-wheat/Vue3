@@ -14,7 +14,10 @@ const systemModule: Module<systemType, IRootState> = {
       usersCount: 0,
       // 角色
       roleList: [],
-      roleCount: 0
+      roleCount: 0,
+      // 商品列表
+      goodsList: [],
+      goodsCount: 0
     }
   },
   getters: {
@@ -32,17 +35,26 @@ const systemModule: Module<systemType, IRootState> = {
     }
   },
   mutations: {
+    // 用户信息
     changeUsersList(state, payload: any) {
       state.usersList = payload
     },
     changeUsersCount(state, payload: number) {
       state.usersCount = payload
     },
+    // 角色信息
     changeRoleList(state, payload: any) {
       state.roleList = payload
     },
     changeRoleCount(state, payload: number) {
       state.roleCount = payload
+    },
+    // 商品信息
+    changeGoodsList(state, payload: any) {
+      state.goodsList = payload
+    },
+    changeGoodsCount(state, payload: number) {
+      state.goodsCount = payload
     }
   },
   actions: {

@@ -11,7 +11,21 @@
       ref="pageContentRef"
       :pageName="pageName"
       :contentTableList="contentTableList"
-    ></page-content>
+    >
+      <template #state="scope">
+        <div>
+          <el-tag class="ml-2" :type="scope.row.enable ? 'success' : 'info'">{{
+            scope.row.enable ? '启用' : '禁用'
+          }}</el-tag>
+        </div>
+      </template>
+      <!-- 自定义表头 -->
+      <template #headerHandle>
+        <div>
+          <el-button type="success">新增用户</el-button>
+        </div>
+      </template>
+    </page-content>
   </div>
 </template>
 

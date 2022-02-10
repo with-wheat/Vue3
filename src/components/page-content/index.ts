@@ -1,3 +1,3 @@
-import PageContent from './src/index.vue'
+import PageContent from './src/page-table.vue'
 
 export default PageContent

@@ -7,13 +7,6 @@
       v-bind="props.contentTableList"
     >
       <!-- 表格插槽  -->
-      <template #state="scope">
-        <div>
-          <el-tag class="ml-2" :type="scope.row.enable ? 'success' : 'info'">{{
-            scope.row.enable ? '启用' : '禁用'
-          }}</el-tag>
-        </div>
-      </template>
       <template #createAt="scope">
         <span>{{ $filters.formatTime(scope.row.createAt) }}</span>
       </template>
@@ -28,15 +21,23 @@
       </template>
       <!-- 自定义表头 -->
       <template #headerHandle>
-        <div>
-          <el-button type="success">新建用户</el-button>
-        </div>
+        <slot name="headerHandle"></slot>
+      </template>
+      <!-- 动态插入插槽 -->
+      <template
+        v-for="item in contentTable"
+        :key="item.slotName"
+        #[item.slotName]="scope"
+      >
+        <template v-if="item.slotName">
+          <slot :name="item.slotName" :row="scope.row"></slot>
+        </template>
       </template>
     </page-table>
   </div>
 </template>
 <script lang="ts" setup>
-import { defineProps, computed, defineExpose, ref, watch } from 'vue'
+import { defineProps, computed, defineExpose, ref, watch, onMounted } from 'vue'
 import { useStore } from 'vuex'
 // 列表组件
 import PageTable from '@/base-ui/table/index'
@@ -52,6 +53,14 @@ const props = defineProps({
 })
 // 定义数据请求的参数
 const pageInfo = ref({ currentPage: 1, pageSize: 10 })
+// 监听pageInfo的变化
+watch(
+  pageInfo,
+  () => {
+    getPageData()
+  },
+  { deep: true }
+)
 // 获取用户数据
 const store = useStore()
 // 发送网络请求
@@ -80,14 +89,23 @@ const userInfo = computed(() =>
 const total = computed(() =>
   store.getters['system/pageListCount'](props.pageName)
 )
-// 监听getPageData的变化
-watch(
-  pageInfo,
-  () => {
-    getPageData()
-  },
-  { deep: true }
-)
+// 获取所有的插槽
+let contentTable = []
+props.contentTableList.listData.forEach((res) => {
+  if (
+    res.slotName !== 'handler' &&
+    res.slotName !== 'createAt' &&
+    res.slotName !== 'updateAt' &&
+    res.slotName
+  ) {
+    return contentTable.push(res)
+  }
+})
+
+onMounted(() => {
+  console.log(contentTable, 'contentTable')
+})
+
 // 暴露出请求方法
 defineExpose({
   getPageData
