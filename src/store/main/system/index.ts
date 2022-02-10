@@ -17,7 +17,10 @@ const systemModule: Module<systemType, IRootState> = {
       roleCount: 0,
       // 商品列表
       goodsList: [],
-      goodsCount: 0
+      goodsCount: 0,
+      // 菜单列表
+      menuList: [],
+      menuCount: 0
     }
   },
   getters: {
@@ -55,6 +58,13 @@ const systemModule: Module<systemType, IRootState> = {
     },
     changeGoodsCount(state, payload: number) {
       state.goodsCount = payload
+    },
+    // 菜单信息
+    changeMenuList(state, payload: any) {
+      state.menuList = payload
+    },
+    changeMenuCount(state, payload: number) {
+      state.menuCount = payload
     }
   },
   actions: {

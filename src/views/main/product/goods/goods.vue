@@ -58,8 +58,6 @@ export default defineComponent({
     const pageName = 'goods'
     const [pageContentRef, resetBtnClick, queryBtnClick] = usePageSearch()
     return {
-      PageSearch,
-      PageContent,
       fromConfig,
       contentTableList,
       pageName,

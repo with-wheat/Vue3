@@ -17,6 +17,7 @@
         :data="props.data"
         @selection-change="handleSelectionChange"
         style="width: 100%"
+        v-bind="childrenProps"
       >
         <el-table-column
           v-if="props.showSelection"
@@ -42,6 +43,7 @@
       </el-table>
       <!-- 分页 -->
       <el-pagination
+        v-if="showFooter"
         :page-sizes="[10, 20, 30]"
         :page-size="props.page.pageSize"
         layout="total, sizes, prev, pager, next, jumper"
@@ -94,6 +96,16 @@ const props = defineProps({
       currentPage: 1,
       pageSize: 10
     })
+  },
+  // 树形展开行
+  childrenProps: {
+    type: Object,
+    default: () => ({})
+  },
+  // 是否显示分页
+  showFooter: {
+    type: Boolean,
+    default: true
   }
 })
 // 向父组件发送选中的数据
