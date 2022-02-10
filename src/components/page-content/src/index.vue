@@ -1,6 +1,11 @@
 <template>
   <div class="page-content">
-    <page-table :data="userInfo" v-bind="props.contentTableList">
+    <page-table
+      :data="userInfo"
+      :total="total"
+      v-model:page="pageInfo"
+      v-bind="props.contentTableList"
+    >
       <!-- 表格插槽  -->
       <template #state="scope">
         <div>
@@ -31,7 +36,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { defineProps, computed, defineExpose } from 'vue'
+import { defineProps, computed, defineExpose, ref, watch } from 'vue'
 import { useStore } from 'vuex'
 // 列表组件
 import PageTable from '@/base-ui/table/index'
@@ -45,6 +50,8 @@ const props = defineProps({
     required: true
   }
 })
+// 定义数据请求的参数
+const pageInfo = ref({ currentPage: 1, pageSize: 10 })
 // 获取用户数据
 const store = useStore()
 // 发送网络请求
@@ -57,8 +64,8 @@ const getPageData = (queryInfo: any = {}) => {
   }
   store.dispatch('system/getSystemList', {
     queryInfo: {
-      offset: 0,
-      size: 10,
+      offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
+      size: pageInfo.value.pageSize,
       ...queryInfo
     },
     pageName: props.pageName
@@ -69,7 +76,18 @@ getPageData()
 const userInfo = computed(() =>
   store.getters['system/pageListData'](props.pageName)
 )
-// const userCount = computed(() => store.state.system.userCount)
+// 获取当前信息的总条数
+const total = computed(() =>
+  store.getters['system/pageListCount'](props.pageName)
+)
+// 监听getPageData的变化
+watch(
+  pageInfo,
+  () => {
+    getPageData()
+  },
+  { deep: true }
+)
 // 暴露出请求方法
 defineExpose({
   getPageData

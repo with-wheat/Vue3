@@ -4,7 +4,7 @@
       <div class="header">
         <slot name="header">
           <div class="title">
-            {{ title }}
+            {{ props.title }}
           </div>
           <div class="handle">
             <!-- 右边自定义处理 -->
@@ -14,19 +14,23 @@
       </div>
       <el-table
         border
-        :data="data"
+        :data="props.data"
         @selection-change="handleSelectionChange"
         style="width: 100%"
       >
-        <el-table-column v-if="showSelection" type="selection" width="55" />
         <el-table-column
-          v-if="showIndex"
+          v-if="props.showSelection"
+          type="selection"
+          width="55"
+        />
+        <el-table-column
+          v-if="props.showIndex"
           type="index"
           label="序号"
           align="center"
           width="80"
         ></el-table-column>
-        <template v-for="item in listData" :key="item.prop">
+        <template v-for="item in props.listData" :key="item.prop">
           <el-table-column v-bind="item" align="center">
             <template #default="scope">
               <slot :name="item.slotName" :row="scope.row">
@@ -38,11 +42,10 @@
       </el-table>
       <!-- 分页 -->
       <el-pagination
-        v-model:currentPage="currentPage4"
-        :page-sizes="[100, 200, 300, 400]"
-        :page-size="100"
+        :page-sizes="[10, 20, 30]"
+        :page-size="props.page.pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="400"
+        :total="total"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
       >
@@ -52,7 +55,8 @@
 </template>
 <script lang="ts" setup>
 import { defineProps, defineEmits, ref } from 'vue'
-defineProps({
+
+const props = defineProps({
   // 总数据
   data: {
     type: Array,
@@ -77,24 +81,36 @@ defineProps({
   title: {
     type: String,
     default: '标题'
+  },
+  // 当前数据的总条数
+  total: {
+    type: Number,
+    default: 0
+  },
+  // 分页数据
+  page: {
+    type: Object,
+    default: () => ({
+      currentPage: 1,
+      pageSize: 10
+    })
   }
 })
 // 向父组件发送选中的数据
-const emit = defineEmits(['handleSelectionChange'])
+const emit = defineEmits(['handleSelectionChange', 'update:page'])
 // 选中事件
-const handleSelectionChange = (even) => {
+const handleSelectionChange = (even: any) => {
   emit('handleSelectionChange', even)
 }
 
 /* 分页 */
-const currentPage4 = ref(1)
 // 每页显示多少条改变事件
-const handleSizeChange = (even) => {
-  console.log(even)
+const handleSizeChange = (pageSize: number) => {
+  emit('update:page', { ...props.page, pageSize })
 }
 // 改变页数
-const handleCurrentChange = (even) => {
-  console.log(even)
+const handleCurrentChange = (currentPage: number) => {
+  emit('update:page', { ...props.page, currentPage })
 }
 </script>
 <style lang="less" scoped>

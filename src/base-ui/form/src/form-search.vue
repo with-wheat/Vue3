@@ -19,6 +19,7 @@
           <el-form-item :style="props.itemStyle" :label="item.label">
             <template v-if="item.type === 'input' || item.type === 'password'">
               <el-input
+                clearable
                 :placeholder="item.placeholder"
                 :model-value="SearchForm[`${item.field}`]"
                 @update:modelValue="handelValueChange($event, item.field)"

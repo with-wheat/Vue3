@@ -18,9 +18,16 @@ const systemModule: Module<systemType, IRootState> = {
     }
   },
   getters: {
+    // 获取用户列表
     pageListData(state) {
       return (pageName: string) => {
         return (state as any)[`${pageName}List`]
+      }
+    },
+    // 获取用户列表的条数
+    pageListCount(state) {
+      return (pageName: string) => {
+        return (state as any)[`${pageName}Count`]
       }
     }
   },
@@ -45,7 +52,6 @@ const systemModule: Module<systemType, IRootState> = {
       const pageUrl = `/${pageName}/list`
       const userInfo = await getUserList(pageUrl, queryInfo)
       const { list, totalCount } = userInfo.data
-
       const changePageName =
         pageName.slice(0, 1).toUpperCase() + pageName.slice(1)
       commit(`change${changePageName}List`, list)
