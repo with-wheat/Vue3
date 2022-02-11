@@ -10,3 +10,13 @@ export function getUserList(pageUrl: string, payload: any) {
   })
   return systemInfo
 }
+/**
+ * 删除信息
+ * @param pageUrl 请求地址
+ * @returns
+ */
+export function deleteUserInfo(url: string) {
+  return Request.delete<IGetDataType>({
+    url: url
+  })
+}

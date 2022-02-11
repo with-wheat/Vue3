@@ -13,17 +13,19 @@
       <template #updateAt="scope">
         <span>{{ $filters.formatTime(scope.row.updateAt) }}</span>
       </template>
-      <template #handler>
+      <template #handler="scope">
         <div class="handel-btn">
-          <el-button type="primary" size="small" plain :icon="Check"
-            >详情</el-button
-          >
+          <!-- 自定义按钮 -->
+          <template>
+            <slot name="headerBtn" :row="scope"></slot>
+          </template>
           <el-button
             type="danger"
             size="small"
             plain
             :icon="Edit"
             v-if="isDelete"
+            @click="handleDelete(scope)"
             >删除</el-button
           >
           <el-button
@@ -88,7 +90,7 @@ watch(
 )
 // 获取用户数据
 const store = useStore()
-// 发送网络请求
+// 获取用户信息
 const getPageData = (queryInfo: any = {}) => {
   // 去掉空键值对
   for (const key in queryInfo) {
@@ -126,6 +128,19 @@ props.contentTableList.listData.forEach((res) => {
     return contentTable.push(res)
   }
 })
+
+// 删除/编辑/新增/方法
+const handleDelete = (data) => {
+  // 获取id
+  const { id } = data.row
+
+  const payload = {
+    id,
+    pageName: props.pageName
+  }
+  console.log(payload)
+  store.dispatch('system/deleteUserInfo', payload)
+}
 
 // 暴露出请求方法
 defineExpose({

@@ -3,7 +3,7 @@ import { systemType } from './types'
 // 引入根目录类型
 import { IRootState } from '../../types'
 
-import { getUserList } from '@/service/main/system'
+import { getUserList, deleteUserInfo } from '@/service/main/system'
 
 const systemModule: Module<systemType, IRootState> = {
   namespaced: true,
@@ -68,7 +68,11 @@ const systemModule: Module<systemType, IRootState> = {
     }
   },
   actions: {
-    // 发送网络请求获取用户列表
+    /**
+     * 发送网络请求获取用户列表
+     * @param param0
+     * @param payload 参数
+     */
     async getSystemList({ commit }, payload: any) {
       const { queryInfo, pageName } = payload
       const pageUrl = `/${pageName}/list`
@@ -78,6 +82,21 @@ const systemModule: Module<systemType, IRootState> = {
         pageName.slice(0, 1).toUpperCase() + pageName.slice(1)
       commit(`change${changePageName}List`, list)
       commit(`change${changePageName}Count`, totalCount)
+    },
+    /**
+     * 发送网络请求获取用户列表
+     * @param param0
+     * @param payload 参数
+     */
+    async deleteUserInfo({ dispatch }, payload: any) {
+      const { id, pageName } = payload
+      const pageUrl = `/${pageName}/${id}`
+      await deleteUserInfo(pageUrl)
+      // 删除成功后刷新数据
+      dispatch('getSystemList', {
+        pageName,
+        queryInfo: { currentPage: 0, pageSize: 10 }
+      })
     }
   }
 }
