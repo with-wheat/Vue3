@@ -145,5 +145,9 @@ const handleCurrentChange = (currentPage: number) => {
     text-align: right;
     margin-top: 10px;
   }
+  // 照片预览被遮盖问题
+  /deep/.el-table .el-table__cell {
+    z-index: auto !important;
+  }
 }
 </style>
