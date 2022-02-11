@@ -42,7 +42,6 @@ const pageName = 'users'
 // 引入公共方法
 import { usePageSearch } from '@/hooks/use-page-search.ts'
 const [pageContentRef, resetBtnClick, queryBtnClick] = usePageSearch()
-// 获取当前
 </script>
 
 <style scoped lang="less"></style>

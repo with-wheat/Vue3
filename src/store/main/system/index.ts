@@ -1,4 +1,5 @@
 import { Module } from 'vuex'
+import { ElMessage } from 'element-plus'
 import { systemType } from './types'
 // 引入根目录类型
 import { IRootState } from '../../types'
@@ -95,7 +96,12 @@ const systemModule: Module<systemType, IRootState> = {
       // 删除成功后刷新数据
       dispatch('getSystemList', {
         pageName,
-        queryInfo: { currentPage: 0, pageSize: 10 }
+        queryInfo: { offset: 0, size: 10 }
+      }).then(() => {
+        ElMessage({
+          message: '删除成功',
+          type: 'success'
+        })
       })
     }
   }
