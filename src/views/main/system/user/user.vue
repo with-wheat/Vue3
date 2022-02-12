@@ -32,16 +32,18 @@
     <!-- 新增弹窗 -->
     <page-model
       ref="pageModelRef"
-      :modelConfig="modelConfig"
+      :modelConfig="modelConfigRef"
       :modeTitle="modeTitle"
       :handelModelValue="handelModelValue"
+      :pageName="pageName"
     >
     </page-model>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useStore } from 'vuex'
 // 获取搜索组件
 import PageSearch from '@/components/page-search/index'
 // 列表组件
@@ -58,6 +60,23 @@ const pageName = 'users'
 // 引入公共方法
 import { usePageSearch } from '@/hooks/use-page-search.ts'
 const [pageContentRef, resetBtnClick, queryBtnClick] = usePageSearch()
+
+const store = useStore()
+// 当vuex数据发生改变时刷新数据,modelConfigRef为配置响应更新
+const modelConfigRef = computed(() => {
+  // 将角色列表和部门列表赋值给表单
+  const roleOptions = modelConfig.formItem.find((res) => res.field === 'roleId')
+  roleOptions!.options = store.state.roleInformation.map((i) => {
+    return { label: i.name, value: i.id }
+  })
+  const departmentOptions = modelConfig.formItem.find(
+    (res) => res.field === 'departmentId'
+  )
+  departmentOptions!.options = store.state.departmentInfo.map((i) => {
+    return { label: i.name, value: i.id }
+  })
+  return modelConfig
+})
 
 // 定义新增编辑的回调函数
 const newBackFun = () => {

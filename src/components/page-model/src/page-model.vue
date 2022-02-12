@@ -8,13 +8,15 @@
       :center="modelCenter"
       destroy-on-close
     >
-      <search-form v-bind="modelConfig" v-model="modelValue"></search-form>
+      <search-form
+        ref="searchRef"
+        v-bind="modelConfig"
+        v-model="modelValue"
+      ></search-form>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="centerDialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="centerDialogVisible = false"
-            >提交</el-button
-          >
+          <el-button type="primary" @click="submitInformation">提交</el-button>
         </span>
       </template>
     </el-dialog>
@@ -22,6 +24,8 @@
 </template>
 <script lang="ts" setup>
 import { ref, defineProps, defineExpose, watch } from 'vue'
+import { useStore } from 'vuex'
+import { ElMessage } from 'element-plus'
 // form组件
 import SearchForm from '@/base-ui/form/index'
 const props = defineProps({
@@ -49,14 +53,22 @@ const props = defineProps({
   handelModelValue: {
     type: Object,
     default: () => ({})
+  },
+  // 引用的页面名
+  pageName: {
+    type: String,
+    required: true
   }
 })
-// 定义modelValue
+
+const searchRef = ref<InstanceType<typeof SearchForm>>()
+
+// 表单信息
 const modelValue = ref({})
 // form弹窗的显示与隐藏
 const centerDialogVisible = ref(false)
 
-// 监听handelModelValue
+// 监听编辑回显的值更新
 watch(
   () => props.handelModelValue,
   (newValue) => {
@@ -66,6 +78,55 @@ watch(
   },
   { deep: true }
 )
+
+const store = useStore()
+// 提交信息
+const submitInformation = () => {
+  // 验证表单
+  searchRef.value.SearchFormRef.validate((valid) => {
+    if (valid) {
+      // 编辑
+      if (Object.keys(props.handelModelValue).length > 0) {
+        const pageName = props.pageName
+        store
+          .dispatch('system/oldUserInformation', {
+            pageName,
+            queryData: { ...modelValue.value },
+            id: props.handelModelValue.id
+          })
+          .then(() => {
+            // 关闭弹窗
+            centerDialogVisible.value = false
+          })
+      } else {
+        // 新增
+        // 验证密码和确认密码是否一致
+        if (modelValue.value.password !== modelValue.value.passwordOK) {
+          return ElMessage.error('密码与确认密码不一致！')
+        }
+        // 删除确认密码
+        delete modelValue.value.passwordOK
+        const pageName = props.pageName
+        store
+          .dispatch('system/newUserInformation', {
+            pageName,
+            queryData: modelValue.value
+          })
+          .then(() => {
+            // 关闭弹窗
+            centerDialogVisible.value = false
+          })
+      }
+    } else {
+      ElMessage({
+        message: '请完善表单！',
+        type: 'warning'
+      })
+      return false
+    }
+  })
+}
+
 defineExpose({
   centerDialogVisible
 })

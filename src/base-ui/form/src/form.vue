@@ -78,7 +78,8 @@ import {
   defineEmits,
   PropType,
   watch,
-  computed
+  computed,
+  defineExpose
 } from 'vue'
 import { IFromItem } from '../types'
 const props = defineProps({
@@ -116,6 +117,10 @@ const props = defineProps({
   }
 })
 const emit = defineEmits(['update:modelValue'])
+
+import type { ElForm } from 'element-plus'
+type FormInstance = InstanceType<typeof ElForm>
+const SearchFormRef = ref<FormInstance>()
 
 const formSize = ref('')
 // 快捷选择方式
@@ -155,6 +160,9 @@ watch(
 const handelValueChange = (value: any, field: string) => {
   emit('update:modelValue', { ...props.modelValue, [field]: value })
 }
+defineExpose({
+  SearchFormRef
+})
 </script>
 <style lang="less" scoped>
 .SearchForm {

@@ -2,7 +2,8 @@ import { systemTypes } from '@/service/main/system/types'
 import { ILoginState } from './login/types'
 export interface IRootState {
   name: string
-  age: number
+  departmentInfo: any[]
+  roleInformation: any[]
 }
 
 export interface IRootWithModule {

@@ -19,15 +19,26 @@
           <template>
             <slot name="headerBtn" :row="scope"></slot>
           </template>
-          <el-button
-            type="danger"
-            size="small"
-            plain
-            :icon="Edit"
-            v-if="isDelete"
-            @click="handleDelete(scope)"
-            >删除</el-button
+          <el-popconfirm
+            confirm-button-text="删除"
+            cancel-button-text="取消"
+            :icon="InfoFilled"
+            icon-color="red"
+            title="是否删除该信息？"
+            @confirm="handleDelete(scope)"
           >
+            <template #reference>
+              <el-button
+                type="danger"
+                size="small"
+                plain
+                :icon="Edit"
+                v-if="isDelete"
+                >删除</el-button
+              >
+            </template>
+          </el-popconfirm>
+
           <el-button
             type="primary"
             size="small"
@@ -66,6 +77,7 @@ import {
   defineEmits
 } from 'vue'
 import { useStore } from 'vuex'
+import { InfoFilled } from '@element-plus/icons-vue'
 import { Edit, Check, Delete } from '@element-plus/icons-vue'
 // 获取用户权限
 import { usePermission } from '@/hooks/use-permission'
@@ -142,7 +154,6 @@ props.contentTableList.listData.forEach((res) => {
 const handleDelete = (data) => {
   // 获取id
   const { id } = data.row
-
   const payload = {
     id,
     pageName: props.pageName

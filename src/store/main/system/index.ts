@@ -4,7 +4,12 @@ import { systemType } from './types'
 // 引入根目录类型
 import { IRootState } from '../../types'
 
-import { getUserList, deleteUserInfo } from '@/service/main/system'
+import {
+  getUserList,
+  deleteUserInfo,
+  insertUserInfo,
+  updateUserInfo
+} from '@/service/main/system'
 
 const systemModule: Module<systemType, IRootState> = {
   namespaced: true,
@@ -102,6 +107,52 @@ const systemModule: Module<systemType, IRootState> = {
           message: '删除成功',
           type: 'success'
         })
+      })
+    },
+    /**
+     * 新增信息
+     * @param param0
+     * @param payload 新增参数
+     */
+    async newUserInformation({ dispatch }, newData: any) {
+      const { pageName, queryData } = newData
+      const pageUrl = `/${pageName}`
+      const insertData = await insertUserInfo(pageUrl, queryData)
+      if (insertData.code === 0) {
+        ElMessage({
+          message: '新增成功',
+          type: 'success'
+        })
+      } else {
+        ElMessage({
+          message: '新增失败',
+          type: 'error'
+        })
+      }
+      // 刷新数据
+      dispatch('getSystemList', {
+        pageName,
+        queryInfo: { offset: 0, size: 10 }
+      })
+    },
+    /**
+     * 编辑信息
+     * @param param0
+     * @param oldValue 编辑参数
+     */
+    async oldUserInformation({ dispatch }, oldValue: any) {
+      const { pageName, queryData, id } = oldValue
+      const pageUrl = `/${pageName}/${id}`
+      await updateUserInfo(pageUrl, queryData).then(() => {
+        ElMessage({
+          message: '编辑成功',
+          type: 'success'
+        })
+      })
+      // 刷新数据
+      dispatch('getSystemList', {
+        pageName,
+        queryInfo: { offset: 0, size: 10 }
       })
     }
   }
