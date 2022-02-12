@@ -41,7 +41,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, defineEmits } from 'vue'
+import { ref } from 'vue'
 // 获取搜索组件
 import PageSearch from '@/components/page-search/index'
 // 列表组件
@@ -59,9 +59,32 @@ const pageName = 'users'
 import { usePageSearch } from '@/hooks/use-page-search.ts'
 const [pageContentRef, resetBtnClick, queryBtnClick] = usePageSearch()
 
+// 定义新增编辑的回调函数
+const newBackFun = () => {
+  // 拿到配置文件修改隐藏的属性
+  const passwordItem = modelConfig.formItem.find(
+    (res) => res.field === 'password'
+  )
+  const passwordOKItem = modelConfig.formItem.find(
+    (res) => res.field === 'passwordOK'
+  )
+  passwordItem!.isShow = false
+  passwordOKItem!.isShow = false
+}
+const oldBackFun = () => {
+  const passwordItem = modelConfig.formItem.find(
+    (res) => res.field === 'password'
+  )
+  const passwordOKItem = modelConfig.formItem.find(
+    (res) => res.field === 'passwordOK'
+  )
+  passwordItem!.isShow = true
+  passwordOKItem!.isShow = true
+}
+
 import { userPageModel } from '@/hooks/use-page-model.ts'
 const [pageModelRef, handelInsertUser, handelUpdate, handelModelValue] =
-  userPageModel()
+  userPageModel(newBackFun, oldBackFun)
 
 // 标题
 const modeTitle = ref('新建用户')

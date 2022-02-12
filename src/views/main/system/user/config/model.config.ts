@@ -62,7 +62,8 @@ export const modelConfig: IForm = {
           trigger: 'blur'
         }
       ],
-      placeholder: '请输入密码'
+      placeholder: '请输入密码',
+      isShow: true
     },
     {
       field: 'passwordOK',
@@ -80,7 +81,8 @@ export const modelConfig: IForm = {
           trigger: 'blur'
         }
       ],
-      placeholder: '请输入确认密码'
+      placeholder: '请输入确认密码',
+      isShow: true
     },
     {
       field: 'cellphone',
@@ -92,16 +94,7 @@ export const modelConfig: IForm = {
       field: 'roleId',
       type: 'select',
       label: '角色',
-      options: [
-        {
-          label: '角色1',
-          value: '1'
-        },
-        {
-          label: '角色2',
-          value: '2'
-        }
-      ],
+      options: [],
       rules: [
         {
           required: true,
@@ -115,16 +108,7 @@ export const modelConfig: IForm = {
       field: 'departmentId',
       type: 'select',
       label: '部门',
-      options: [
-        {
-          label: '部门1',
-          value: '1'
-        },
-        {
-          label: '部门2',
-          value: '2'
-        }
-      ],
+      options: [],
       rules: [
         {
           required: true,

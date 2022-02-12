@@ -22,6 +22,7 @@
             :prop="item.field"
             :label="item.label"
             :rules="item.rules"
+            v-if="!item.isShow"
           >
             <template v-if="item.type === 'input' || item.type === 'password'">
               <el-input

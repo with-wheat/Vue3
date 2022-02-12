@@ -15,6 +15,8 @@ export interface IFromItem {
   options?: selectOptionsType[]
   // 其他属性
   otherOptions?: any
+  // 根据条件判断是否显示
+  isShow?: boolean
 }
 
 export interface IForm {
