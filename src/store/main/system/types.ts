@@ -1,10 +1,14 @@
 export interface systemType {
-  usersList: any
+  usersList: any[]
   usersCount: number
-  roleList: any
+  roleList: any[]
   roleCount: number
-  goodsList: any
+  goodsList: any[]
   goodsCount: number
-  menuList: any
+  menuList: any[]
   menuCount: number
+  departmentList: any[]
+  departmentCount: number
+  categoryList: any[]
+  categoryCount: number
 }

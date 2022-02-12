@@ -26,7 +26,13 @@ const systemModule: Module<systemType, IRootState> = {
       goodsCount: 0,
       // 菜单列表
       menuList: [],
-      menuCount: 0
+      menuCount: 0,
+      // 部门列表
+      departmentList: [],
+      departmentCount: 0,
+      // 商品类别列表
+      categoryList: [],
+      categoryCount: 0
     }
   },
   getters: {
@@ -71,6 +77,20 @@ const systemModule: Module<systemType, IRootState> = {
     },
     changeMenuCount(state, payload: number) {
       state.menuCount = payload
+    },
+    // 部门信息
+    changeDepartmentList(state, payload: any) {
+      state.departmentList = payload
+    },
+    changeDepartmentCount(state, payload: number) {
+      state.departmentCount = payload
+    },
+    // 商品类别
+    changeCategoryList(state, payload: any) {
+      state.categoryList = payload
+    },
+    changeCategoryCount(state, payload: number) {
+      state.categoryCount = payload
     }
   },
   actions: {
