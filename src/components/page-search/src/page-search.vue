@@ -1,7 +1,7 @@
 <template>
   <div class="page-search">
     <div class="search">
-      <search v-bind="props.fromConfig" v-model="searchFormData">
+      <search v-bind="fromConfig" v-model="searchFormData">
         <template #header>
           <div class="searchHeader">
             <h4>检索数据</h4>

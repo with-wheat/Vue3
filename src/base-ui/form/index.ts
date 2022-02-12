@@ -1,4 +1,4 @@
-import SearchForm from './src/form-search.vue'
+import SearchForm from './src/form.vue'
 
 // 导出类型
 export * from './types'

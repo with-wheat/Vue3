@@ -6,17 +6,23 @@
     </header>
     <el-form
       ref="SearchFormRef"
-      :label-width="props.labelWidth"
+      :model="modelValue"
+      :label-width="labelWidth"
       class="demo-ruleForm"
       :size="formSize"
     >
       <el-row>
         <el-col
-          v-for="(item, index) in props.formItem"
+          v-for="(item, index) in formItem"
           :key="index"
-          v-bind="props.spanLayout"
+          v-bind="spanLayout"
         >
-          <el-form-item :style="props.itemStyle" :label="item.label">
+          <el-form-item
+            :style="itemStyle"
+            :prop="item.field"
+            :label="item.label"
+            :rules="item.rules"
+          >
             <template v-if="item.type === 'input' || item.type === 'password'">
               <el-input
                 clearable

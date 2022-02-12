@@ -36,7 +36,7 @@ export const fromConfig: IForm = {
       placeholder: '请输入真实姓名'
     },
     {
-      field: 'callphone',
+      field: 'cellphone',
       type: 'input',
       label: '电话号码',
       rules: [],

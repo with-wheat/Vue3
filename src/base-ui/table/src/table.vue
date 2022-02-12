@@ -4,7 +4,7 @@
       <div class="header">
         <slot name="header">
           <div class="title">
-            {{ props.title }}
+            {{ title }}
           </div>
           <div class="handle">
             <!-- 右边自定义处理 -->
@@ -14,24 +14,20 @@
       </div>
       <el-table
         border
-        :data="props.data"
+        :data="data"
         @selection-change="handleSelectionChange"
         style="width: 100%"
         v-bind="childrenProps"
       >
+        <el-table-column v-if="showSelection" type="selection" width="55" />
         <el-table-column
-          v-if="props.showSelection"
-          type="selection"
-          width="55"
-        />
-        <el-table-column
-          v-if="props.showIndex"
+          v-if="showIndex"
           type="index"
           label="序号"
           align="center"
           width="80"
         ></el-table-column>
-        <template v-for="item in props.listData" :key="item.prop">
+        <template v-for="item in listData" :key="item.prop">
           <el-table-column v-bind="item" align="center">
             <template #default="scope">
               <slot :name="item.slotName" :row="scope.row">
@@ -45,7 +41,7 @@
       <el-pagination
         v-if="showFooter"
         :page-sizes="[10, 20, 30]"
-        :page-size="props.page.pageSize"
+        :page-size="page.pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
         @size-change="handleSizeChange"

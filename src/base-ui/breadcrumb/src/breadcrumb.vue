@@ -2,7 +2,7 @@
   <div class="nav-breadcrumb">
     <el-breadcrumb separator="/">
       <el-breadcrumb-item
-        v-for="(item, index) in props.breadCrumbsData"
+        v-for="(item, index) in breadCrumbsData"
         :key="index"
         :to="{ path: item.path }"
         >{{ item.name }}</el-breadcrumb-item

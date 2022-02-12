@@ -4,7 +4,7 @@
       :data="userInfo"
       :total="total"
       v-model:page="pageInfo"
-      v-bind="props.contentTableList"
+      v-bind="contentTableList"
     >
       <!-- 表格插槽  -->
       <template #createAt="scope">
@@ -34,6 +34,7 @@
             plain
             :icon="Edit"
             v-if="isUpdate"
+            @click="handelUpdate(scope)"
             >编辑</el-button
           >
         </div>
@@ -56,7 +57,14 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { defineProps, computed, defineExpose, ref, watch } from 'vue'
+import {
+  defineProps,
+  computed,
+  defineExpose,
+  ref,
+  watch,
+  defineEmits
+} from 'vue'
 import { useStore } from 'vuex'
 import { Edit, Check, Delete } from '@element-plus/icons-vue'
 // 获取用户权限
@@ -78,6 +86,7 @@ const props = defineProps({
     required: true
   }
 })
+const emit = defineEmits(['handelUpdate'])
 // 定义数据请求的参数
 const pageInfo = ref({ currentPage: 1, pageSize: 10 })
 // 监听pageInfo的变化
@@ -140,6 +149,9 @@ const handleDelete = (data) => {
   }
   console.log(payload)
   store.dispatch('system/deleteUserInfo', payload)
+}
+const handelUpdate = (data) => {
+  emit('handelUpdate', data)
 }
 
 // 暴露出请求方法

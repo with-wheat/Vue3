@@ -2,12 +2,12 @@
   <div class="nav-menu">
     <div class="logo">
       <img class="img" src="~@/assets/img/logo.svg" alt="logo" />
-      <span class="title" v-if="!props.isCollapse"> VUE3+TS </span>
+      <span class="title" v-if="!isCollapse"> VUE3+TS </span>
     </div>
     <el-menu
       :default-active="active"
       class="el-menu-vertical"
-      :collapse="props.isCollapse"
+      :collapse="isCollapse"
       background-color="#0c2135"
       text-color="#b7bdc3"
       active-text-color="#0a60bd"
