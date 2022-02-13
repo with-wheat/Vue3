@@ -1,10 +1,10 @@
 // service统一出口
-import HYRequest from './request'
+import launchRequest from './request'
 import { BASE_URL, TIME_OUT } from './request/config'
 
 import LocalCache from '@/utils/cache'
 
-const Request = new HYRequest({
+const Request = new launchRequest({
   baseURL: BASE_URL,
   timeout: TIME_OUT,
   interceptors: {
