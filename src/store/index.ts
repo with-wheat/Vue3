@@ -49,8 +49,6 @@ const store = createStore<IRootState>({
 // 数据持久化(防止数据刷新登录信息丢失)
 export function setUpStore() {
   store.dispatch('login/persistence')
-  // 获取部门角色信息列表
-  store.dispatch('getInformation')
 }
 // 获取数据，支持ts
 export function userStore(): Store<IStoreType> {

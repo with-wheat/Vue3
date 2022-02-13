@@ -58,12 +58,14 @@ const loginModule: Module<ILoginState, IRootState> = {
   },
   actions: {
     // 账号密码登陆
-    async accountLoginAction({ commit }, payload: IAccount) {
+    async accountLoginAction({ commit, dispatch }, payload: IAccount) {
       // 实现登录逻辑
       const login = await accountLoginRequest(payload)
       const { id, token } = login.data
       // 保存token
       commit('changeToken', token)
+      // 获取部门列表和角色列表的信息
+      dispatch('getInformation', null, { root: true })
       // 查询用户信息
       const userInfo = await requestUserInfo(id)
       // 保存用户信息
@@ -78,12 +80,14 @@ const loginModule: Module<ILoginState, IRootState> = {
     },
 
     // 数据持久化
-    persistence({ commit }) {
+    persistence({ commit, dispatch }) {
       // 获取token
       const token = LocalCache.getCache('TOKEN_KEY')
       if (token) {
         commit('changeToken', token)
       }
+      // 获取部门列表和角色列表的信息
+      dispatch('getInformation', null, { root: true })
       // 获取用户信息
       const userInfo = LocalCache.getCache('UserInfo')
       if (userInfo) {

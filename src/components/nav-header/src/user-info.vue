@@ -10,7 +10,7 @@
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item>
+          <el-dropdown-item @click="handleExit">
             <el-icon><circle-close-filled /></el-icon>
             退出登录
           </el-dropdown-item>
@@ -29,10 +29,17 @@
 </template>
 <script lang="ts" setup>
 import { useStore } from 'vuex'
-
+import { useRouter } from 'vue-router'
+import LocalCache from '@/utils/cache'
 const store = useStore()
 // 获取用户名
 const userName = store.state.login.userInfo.name
+// 退出登录
+const router = useRouter()
+const handleExit = () => {
+  LocalCache.deleteCache('TOKEN_KEY')
+  router.push('./home')
+}
 </script>
 <style lang="less" scoped>
 .el-dropdown-link {
