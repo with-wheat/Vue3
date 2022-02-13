@@ -9,8 +9,12 @@ const store = createStore<IRootState>({
   state() {
     return {
       name: 'Lxy',
+      // 部门信息
       departmentInfo: [],
-      roleInformation: []
+      // 角色信息
+      roleInformation: [],
+      // 菜单信息
+      entryMenuList: []
     }
   },
   mutations: {
@@ -19,6 +23,9 @@ const store = createStore<IRootState>({
     },
     saveDepartmentInfo(state, payload: any[]) {
       state.departmentInfo = payload
+    },
+    saveEntryMenuList(state, payload: any[]) {
+      state.entryMenuList = payload
     }
   },
   actions: {
@@ -35,9 +42,14 @@ const store = createStore<IRootState>({
         size: 1000
       })
       const { list: roleList } = roleInformation.data
+
+      // 获取权限信息
+      const entryMenuData = await getUserList('/menu/list', {})
+      const { list: menuList } = entryMenuData.data
       // 保存
       commit('saveRoleInformation', roleList)
       commit('saveDepartmentInfo', departmentList)
+      commit('saveEntryMenuList', menuList)
     }
   },
   modules: {

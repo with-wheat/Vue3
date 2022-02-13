@@ -13,6 +13,7 @@
         v-bind="modelConfig"
         v-model="modelValue"
       ></search-form>
+      <slot></slot>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="centerDialogVisible = false">取消</el-button>
@@ -58,6 +59,11 @@ const props = defineProps({
   pageName: {
     type: String,
     required: true
+  },
+  // 权限选择的节点
+  checkedKeys: {
+    type: Object,
+    default: () => ({})
   }
 })
 
@@ -91,7 +97,7 @@ const submitInformation = () => {
         store
           .dispatch('system/oldUserInformation', {
             pageName,
-            queryData: { ...modelValue.value },
+            queryData: { ...modelValue.value, ...props.checkedKeys },
             id: props.handelModelValue.id
           })
           .then(() => {
@@ -110,11 +116,12 @@ const submitInformation = () => {
         store
           .dispatch('system/newUserInformation', {
             pageName,
-            queryData: modelValue.value
+            queryData: { ...modelValue.value, ...props.checkedKeys }
           })
           .then(() => {
             // 关闭弹窗
             centerDialogVisible.value = false
+            return false
           })
       }
     } else {

@@ -6,9 +6,10 @@ import 'normalize.css'
 import './assets/css/index.less'
 import { setUpStore } from '@/store'
 const app = createApp(App)
-// 引入引入element-plus
+// 公共全局注册的方法
 import { globalRegister } from './global'
 globalRegister(app)
+import 'element-plus/dist/index.css'
 // 引入element-plus-icon
 import {
   Avatar,
@@ -21,7 +22,7 @@ import {
   CircleCloseFilled
 } from '@element-plus/icons-vue'
 
-// hyRequest.request<DataType>({
+// Request.request<DataType>({
 //   url: '/home/multidata',
 //   method: 'GET',
 //   headers: {},

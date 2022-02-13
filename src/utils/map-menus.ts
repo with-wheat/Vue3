@@ -97,5 +97,25 @@ export function mapMenusToPermissions(userMenus: any[]) {
   _recurseGetPermissions(userMenus)
   return permissions
 }
+/**
+ * 获取Node数据的所有页节点
+ * @param menuList Node节点数据
+ * @returns
+ */
+export function getLeafNodes(menuList: any[]) {
+  // 存储页节点
+  const leafNode: any[] = []
+  const recursiveNode = (menuList: any[]) => {
+    for (const item of menuList) {
+      if (item.children) {
+        recursiveNode(item.children)
+      } else {
+        leafNode.push(item)
+      }
+    }
+  }
+  recursiveNode(menuList)
+  return leafNode
+}
 
 export { firstMenu }
