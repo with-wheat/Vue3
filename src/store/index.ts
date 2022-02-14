@@ -2,7 +2,7 @@ import { Store, createStore, useStore as useVuexStore } from 'vuex'
 
 import login from './login'
 import system from './main/system'
-import overView from './chart/overview'
+import dashboard from './chart/dashboard'
 // 获取用户信息
 import { getUserList } from '@/service/main/system/index'
 import { IRootState, IStoreType } from './types'
@@ -56,7 +56,7 @@ const store = createStore<IRootState>({
   modules: {
     login,
     system,
-    overView
+    dashboard
   }
 })
 

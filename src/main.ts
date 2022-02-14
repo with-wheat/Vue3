@@ -19,7 +19,8 @@ import {
   Menu,
   ArrowDown,
   Shop,
-  CircleCloseFilled
+  CircleCloseFilled,
+  WarningFilled
 } from '@element-plus/icons-vue'
 
 // Request.request<DataType>({
@@ -50,6 +51,7 @@ app
   .component('arrow-down', ArrowDown)
   .component('shop', Shop)
   .component('circle-close-filled', CircleCloseFilled)
+  .component('warning-filled', WarningFilled)
   .use(store)
   .use(router)
   .mount('#app')

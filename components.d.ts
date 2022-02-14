@@ -38,12 +38,14 @@ declare module 'vue' {
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTag: typeof import('element-plus/es')['ElTag']
+    ElTooltip: typeof import('element-plus/es')['ElTooltip']
     ElTree: typeof import('element-plus/es')['ElTree']
     NavHeader: typeof import('./src/components/nav-header/src/nav-header.vue')['default']
     NavMenu: typeof import('./src/components/nav-menu/src/nav-menu.vue')['default']
     PageModel: typeof import('./src/components/page-model/src/page-model.vue')['default']
     PageSearch: typeof import('./src/components/page-search/src/page-search.vue')['default']
     PageTable: typeof import('./src/components/page-content/src/page-table.vue')['default']
+    Src: typeof import('./src/components/statistical-panel/src/index.vue')['default']
     UserInfo: typeof import('./src/components/nav-header/src/user-info.vue')['default']
   }
 }
