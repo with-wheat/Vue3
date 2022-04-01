@@ -20,6 +20,7 @@ const overViewModule: Module<IChartTypes, IRootState> = {
       amountList: []
     }
   },
+  getters: {},
   mutations: {
     // 存储分类商品的个数
     saveCategoryCount(state, data: any) {

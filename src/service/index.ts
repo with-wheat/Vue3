@@ -2,6 +2,8 @@
 import launchRequest from './request'
 import { BASE_URL, TIME_OUT } from './request/config'
 
+import router from '@/router/index'
+
 import LocalCache from '@/utils/cache'
 
 const Request = new launchRequest({
@@ -27,6 +29,8 @@ const Request = new launchRequest({
       return res
     },
     responseInterceptorCatch: (err) => {
+      // token失效返回登录页面
+      router.replace('/login')
       return err
     }
   }

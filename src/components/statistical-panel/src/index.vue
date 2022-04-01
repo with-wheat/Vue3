@@ -1,3 +1,10 @@
+<!--
+ * @Description: 滚动字体
+ * @Author: Lxy
+ * @Date: 2022-02-14 19:30:00
+ * @LastEditTime: 2022-04-01 15:15:05
+ * @LastEditors:
+-->
 <template>
   <div class="statistical">
     <div class="header">
@@ -62,7 +69,6 @@ export default defineComponent({
   flex-direction: column;
   justify-content: flex-start;
   box-shadow: 0 2px 12px 0 rgb(0 0 0/10%);
-  margin: 10px 0;
   .header {
     display: flex;
     height: @h;

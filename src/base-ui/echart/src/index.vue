@@ -5,7 +5,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, defineProps, nextTick, withDefaults } from 'vue'
+import {
+  ref,
+  onMounted,
+  defineProps,
+  nextTick,
+  withDefaults,
+  watchEffect
+} from 'vue'
 import * as echarts from 'echarts'
 import { EChartsOption } from 'echarts'
 import useEchart from '../hooks/useEchart'
@@ -20,7 +27,9 @@ const echartDivRef = ref<HTMLElement>()
 onMounted(() => {
   // 使用封装的echatrsHooks
   const { setOptions } = useEchart(echartDivRef.value)
-  setOptions(props.options)
+  watchEffect(() => {
+    setOptions(props.options)
+  })
 })
 
 // 定义默认值
