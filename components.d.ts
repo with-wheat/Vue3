@@ -5,6 +5,7 @@
 declare module 'vue' {
   export interface GlobalComponents {
     AxisEchart: typeof import('./src/components/base-echarts/src/axis-echart.vue')['default']
+    BarChart: typeof import('./src/components/base-echarts/src/bar-chart.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']
@@ -43,6 +44,7 @@ declare module 'vue' {
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     ElTree: typeof import('element-plus/es')['ElTree']
     FunnelEchart: typeof import('./src/components/base-echarts/src/funnel-echart.vue')['default']
+    MapEchart: typeof import('./src/components/base-echarts/src/map-echart.vue')['default']
     NavHeader: typeof import('./src/components/nav-header/src/nav-header.vue')['default']
     NavMenu: typeof import('./src/components/nav-menu/src/nav-menu.vue')['default']
     PageModel: typeof import('./src/components/page-model/src/page-model.vue')['default']

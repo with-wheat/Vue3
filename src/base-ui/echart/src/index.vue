@@ -1,6 +1,16 @@
+<!--
+ * @Description:
+ * @Author: Lxy
+ * @Date: 2022-04-01 15:23:50
+ * @LastEditTime: 2022-04-01 22:34:35
+ * @LastEditors:
+-->
 <template>
   <div class="echarts">
-    <div ref="echartDivRef" :style="{ width: width, height: height }"></div>
+    <div
+      ref="echartDivRef"
+      :style="{ width: props.width, height: props.height }"
+    ></div>
   </div>
 </template>
 

@@ -2,7 +2,7 @@
  * @Description: 封装折线图
  * @Author: Lxy
  * @Date: 2022-04-01 14:09:00
- * @LastEditTime: 2022-04-01 15:09:15
+ * @LastEditTime: 2022-04-01 22:48:02
  * @LastEditors:
 -->
 <template>
@@ -58,7 +58,7 @@ const options = computed(() => {
                 };font-weight:700;font-size: 18px;margin-left:5px">${
             v.value
           }</span>
-                万元`
+                个`
         })
         return html
       },
@@ -81,9 +81,9 @@ const options = computed(() => {
       {
         type: 'category',
         boundaryGap: false,
-        axisLabel: {
+        textStyle: {
           formatter: '{value}',
-          textStyle: {
+          axisName: {
             color: '#333'
           }
         },
@@ -99,8 +99,8 @@ const options = computed(() => {
       {
         type: 'value',
         name: '单位（个）',
-        axisLabel: {
-          textStyle: {
+        textStyle: {
+          axisName: {
             color: '#666'
           }
         },
