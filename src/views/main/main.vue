@@ -1,3 +1,10 @@
+<!--
+ * @Description: 首页
+ * @Author: Lxy
+ * @Date: 2022-02-08 15:43:38
+ * @LastEditTime: 2022-04-11 10:24:43
+ * @LastEditors:
+-->
 <template>
   <el-container class="main-content">
     <el-aside :width="isCollapse ? '60px' : '210px'">
@@ -9,7 +16,9 @@
       </el-header>
       <el-main class="page-content">
         <div class="page-info">
-          <router-view></router-view>
+          <transition name="slide-fade">
+            <router-view></router-view>
+          </transition>
         </div>
       </el-main>
     </el-container>
@@ -23,15 +32,12 @@ import NavHeader from '@/components/nav-header'
 export default defineComponent({
   components: { NavMenu, NavHeader },
   setup() {
-    const requests = () => {
-      console.log(Request)
-    }
     const isCollapse = ref(false)
     // 监听头部收缩点击事件
     const foldChange = (flag) => {
       isCollapse.value = flag
     }
-    return { requests, isCollapse, foldChange }
+    return { isCollapse, foldChange }
   }
 })
 </script>
@@ -48,6 +54,24 @@ export default defineComponent({
   .page-info {
     background-color: #fff;
     border-radius: 5px;
+
+    /*
+      进入和离开动画可以使用不同
+      持续时间和速度曲线。
+    */
+    .slide-fade-enter-active {
+      transition: all 0.4s ease-out;
+    }
+
+    .slide-fade-leave-active {
+      transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+    }
+
+    .slide-fade-enter-from,
+    .slide-fade-leave-to {
+      transform: translateX(30px);
+      opacity: 0;
+    }
   }
 }
 

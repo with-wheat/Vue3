@@ -103,10 +103,6 @@ const menuClick = (data: any) => {
       color: white;
     }
 
-    .el-menu {
-      border-right: none;
-    }
-
     // 目录
     .el-submenu {
       background-color: #001529 !important;
@@ -125,6 +121,10 @@ const menuClick = (data: any) => {
     .el-menu-item:hover {
       color: #fff !important; // 菜单
     }
+  }
+
+  ::v-deep .el-menu {
+    border-right: none !important;
   }
 
   .el-menu-vertical:not(.el-menu--collapse) {
