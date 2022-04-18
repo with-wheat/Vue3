@@ -18,7 +18,20 @@
           <!-- 二级菜单的可以展开的标题 -->
           <el-sub-menu :index="item.id + ''">
             <template #title>
-              <el-icon v-if="item.icon"><Menu /></el-icon>
+              <el-icon v-if="item.icon && item.icon === 'el-icon-monitor'">
+                <Monitor />
+              </el-icon>
+              <el-icon v-else-if="item.icon && item.icon === 'el-icon-setting'">
+                <Setting />
+              </el-icon>
+              <el-icon v-else-if="item.icon && item.icon === 'el-icon-goods'">
+                <Goods />
+              </el-icon>
+              <el-icon
+                v-else-if="item.icon && item.icon === 'el-icon-chat-line-round'"
+              >
+                <ChatLineRound />
+              </el-icon>
               <span>{{ item.name }}</span>
             </template>
             <!-- 遍历里面的item -->
@@ -49,6 +62,9 @@ import { computed, defineProps, ref, onMounted } from 'vue'
 import { userStore } from '@/store'
 import { useRoute, useRouter } from 'vue-router'
 import { pathToMenu } from '@/utils/map-menus'
+
+// 引入图标icon
+import { Monitor, Goods, Setting, ChatLineRound } from '@element-plus/icons-vue'
 // props
 const props = defineProps({
   isCollapse: Boolean
@@ -56,10 +72,6 @@ const props = defineProps({
 // 获取store的菜单
 const store = userStore()
 const useMenu = computed(() => store.state.login.userMenus)
-// 默认激活的index
-onMounted(() => {
-  // console.log(firstMenu)
-})
 // 路由
 // 获取路由
 const router = useRouter()
