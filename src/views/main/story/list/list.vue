@@ -1,17 +1,15 @@
 <template>
-  <div class="list">
-    <h2>list</h2>
-  </div>
+  <div>list</div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'list',
-  setup() {
-    return {}
-  }
+<script setup lang="ts">
+import { reactive, onMounted } from 'vue'
+import { getStoryList } from '@/service/main/story/index'
+const storyList = reactive({})
+onMounted(async () => {
+  const storyData = await getStoryList('/story/list')
+  storyList.value = storyData.data
+  console.log(storyList.value, 'storyList')
 })
 </script>
 
